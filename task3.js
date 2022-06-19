@@ -34,54 +34,25 @@ class DivNesting {
   }
 }
 
-// вставьте в эту переменную иную вложенность, если требуется
-let testString = `
-<div>
-    <div>
-        <div></div>
-        <div>
-            <div>
-                <div></div>
-            </div>
-            <div>
-                <div></div>
-                <div>
-                    <div>
-                        <div></div>
-                        <div>
-                            <div>
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div></div>
-            </div>
-        </div>
-        <div>
-            <div></div>
-            <div>
-                <div>
-                    <div>
-                        <div></div>
-                        <div></div>
-                    </div>
-                </div>
-                <div>
-                    <div></div>
-                    <div>
-                        <div>
-                            <div>
-                                <div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-`
-let nesting = new DivNesting(testString);
-console.log(nesting.divNestingCulc())
+function divDisplay(value) {
+  let parent = document.getElementsByClassName("nesting")[0];
+  let content = document.createElement("div");
+  content.className ="nesting__number theme";
+  content.textContent = value;
+  parent.append(content);
+}
+
+document.querySelector("button").addEventListener("click", function listener() {
+  let file = document.getElementById('file').files[0];
+  let reader = new FileReader();
+  reader.readAsText(file);
+  reader.onload = function() {
+    let nesting = new DivNesting(reader.result);
+    console.log(nesting.divNestingCulc());
+    divDisplay(nesting.divNestingCulc());
+  }
+  reader.onerror = function() {
+    console.log(reader.error);
+  }
+  document.querySelector("button").removeEventListener('click', listener);
+})
